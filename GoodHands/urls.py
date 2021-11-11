@@ -21,7 +21,8 @@ from GiveInApp import views as v
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', v.MainPageView.as_view(), name='main_page'),
-    path('login/', v.LoginView.as_view(), name='login'),
-    path('register/', v.RegisterView.as_view(), name='register'),
-    path('donation/', v.AddDonationView.as_view(), name='add_donation')
+    path('accounts/login/', v.LoginView.as_view(), name='login'),
+    path('accounts/register/', v.RegisterView.as_view(), name='register'),
+    path('donation/', v.AddDonationView.as_view(), name='add_donation'),
+    path('accounts/logout/', v.LogoutView.as_view(), name='logout')
 ]

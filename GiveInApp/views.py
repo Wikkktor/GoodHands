@@ -1,11 +1,12 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.context_processors import messages
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.views import View
 from django.db.models import Sum
-from GiveInApp.models import Institution, Donation
+from GiveInApp.models import Institution, Donation, Category
 
 
 class MainPageView(View):
@@ -57,7 +58,14 @@ class RegisterView(View):
             return HttpResponse('hasła nie są takie same')
 
 
-class AddDonationView(View):
+class LogoutView(View):
     def get(self, request):
-        context = render(request, 'form.html')
+        logout(request)
+        return redirect('main_page')
+
+
+class AddDonationView(LoginRequiredMixin, View):
+    def get(self, request):
+        categories = Category.objects.all()
+        context = render(request, 'form.html', {'category': categories})
         return context
