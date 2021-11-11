@@ -29,7 +29,7 @@ class LoginView(View):
     def post(self, request):
         email = request.POST['email']
         password = request.POST['password']
-        user = authenticate(email=email, password=password)
+        user = authenticate(username=email, password=password)
         if user is not None:
             login(request, user)
             return redirect('main_page')
@@ -55,7 +55,6 @@ class RegisterView(View):
             return redirect('main_page')
         else:
             return HttpResponse('hasła nie są takie same')
-
 
 
 class AddDonationView(View):
