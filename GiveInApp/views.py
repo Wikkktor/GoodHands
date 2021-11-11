@@ -1,3 +1,4 @@
+from django.contrib.auth import authenticate, login
 from django.contrib.messages.context_processors import messages
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -25,6 +26,16 @@ class LoginView(View):
         context = render(request, 'login.html')
         return context
 
+    def post(self, request):
+        email = request.POST['email']
+        password = request.POST['password']
+        user = authenticate(email=email, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('main_page')
+        else:
+            return redirect("register")
+
 
 class RegisterView(View):
     def get(self, request):
@@ -38,7 +49,9 @@ class RegisterView(View):
         password = request.POST['password']
         password2 = request.POST['password2']
         if password == password2:
-            User.objects.create(first_name=name, last_name=surname, email=email, username=email, password=password)
+            user = User.objects.create(first_name=name, last_name=surname, email=email, username=email, password=password)
+            user.set_password(password)
+            user.save()
             return redirect('main_page')
         else:
             return HttpResponse('hasła nie są takie same')
