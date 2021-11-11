@@ -6,7 +6,7 @@ from django.views import View
 
 class MainPageView(View):
     def get(self, request):
-        context = render(request, 'index.html')
+        context = render(request, 'base.html')
         return context
 
 

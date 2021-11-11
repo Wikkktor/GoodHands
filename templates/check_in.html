@@ -1,17 +1,19 @@
-{% extends 'base.html' %}
 {% load static %}
-{% block main_menu %}
-<header class="header--form-page">
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>GoodHands</title>
+    <link rel="stylesheet" href="/static/css/style.css"/>
+</head>
+<body>
+<header>
     <nav class="container container--70">
         <ul class="nav--actions">
-            <li class="logged-user">
-                Witaj Agata
-                <ul class="dropdown">
-                    <li><a href="#">Profil</a></li>
-                    <li><a href="#">Moje zbiórki</a></li>
-                    <li><a href="#">Wyloguj</a></li>
-                </ul>
-            </li>
+            <li><a href="#">Zaloguj</a></li>
+            <li class="highlighted"><a href="#">Załóż konto</a></li>
         </ul>
 
         <ul>
@@ -22,14 +24,9 @@
             <li><a href="{% url 'main_page' %}#contact" class="btn btn--without-border">Kontakt</a></li>
         </ul>
     </nav>
-{% endblock %}
-{% block content %}
-    <div class="slogan container container--90">
-        <h2>
-            Dziękujemy za przesłanie formularza Na maila prześlemy wszelkie
-            informacje o odbiorze.
-        </h2>
-    </div>
 </header>
+{% block check_in_form %}
 {% endblock %}
-
+{% include 'contact_form.html' %}
+</body>
+</html>
