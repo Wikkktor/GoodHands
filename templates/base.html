@@ -13,8 +13,19 @@
     <header class="header--main-page">
     <nav class="container container--70">
         <ul class="nav--actions">
-            <li><a href="{% url 'login' %}" class="btn btn--small btn--without-border">Zaloguj</a></li>
-            <li><a href="{% url 'register' %}" class="btn btn--small btn--highlighted">Załóż konto</a></li>
+            {% if user.is_authenticated %}
+                <li class="logged-user">
+                    Witaj {{ user.first_name }}
+                    <ul class="dropdown">
+                        <li><a href="#">Profil</a></li>
+                        <li><a href="#">Ustawienia</a></li>
+                        <li><a href="#">Wyloguj</a></li>
+                    </ul>
+                </li>
+            {% else %}
+                <li><a href="{% url 'login' %}" class="btn btn--small btn--without-border">Zaloguj</a></li>
+                <li><a href="{% url 'register' %}" class="btn btn--small btn--highlighted">Załóż konto</a></li>
+            {% endif %}
         </ul>
 
         <ul>
@@ -152,16 +163,16 @@
             </p>
             <ul class="help--slides-items">
                 {% for element in non_gov_organizations %}
-                <li>
-                    <div class="col">
-                        <div class="title">{{ element.name}}</div>
-                        <div class="subtitle">{{ element.description }}</div>
-                    </div>
+                    <li>
+                        <div class="col">
+                            <div class="title">{{ element.name }}</div>
+                            <div class="subtitle">{{ element.description }}</div>
+                        </div>
 
-                    <div class="col">
-                        <div class="text">{{ element.categories }}</div>
-                    </div>
-                </li>
+                        <div class="col">
+                            <div class="text">{{ element.categories }}</div>
+                        </div>
+                    </li>
                 {% endfor %}
             </ul>
 
@@ -183,16 +194,16 @@
                 eos ne, ea his reque quaeque recteque, ne quo lobortis intellegam.</p>
             <ul class="help--slides-items">
                 {% for element in local_collections %}
-                <li>
-                    <div class="col">
-                        <div class="title">{{ element.name }}</div>
-                        <div class="subtitle">{{ element.description }}</div>
-                    </div>
+                    <li>
+                        <div class="col">
+                            <div class="title">{{ element.name }}</div>
+                            <div class="subtitle">{{ element.description }}</div>
+                        </div>
 
-                    <div class="col">
-                        <div class="text">{{ element.categories }}</div>
-                    </div>
-                </li>
+                        <div class="col">
+                            <div class="text">{{ element.categories }}</div>
+                        </div>
+                    </li>
                 {% endfor %}
             </ul>
 
