@@ -70,3 +70,8 @@ class AddDonationView(LoginRequiredMixin, View):
         institutions = Institution.objects.all()
         context = render(request, 'form.html', {'category': categories, 'institutions': institutions})
         return context
+
+
+class DonationConfirmation(View):
+    def get(self, request):
+        return render(request, 'form-confirmation.html')
