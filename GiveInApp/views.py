@@ -67,5 +67,6 @@ class LogoutView(View):
 class AddDonationView(LoginRequiredMixin, View):
     def get(self, request):
         categories = Category.objects.all()
-        context = render(request, 'form.html', {'category': categories})
+        institutions = Institution.objects.all()
+        context = render(request, 'form.html', {'category': categories, 'institutions': institutions})
         return context
