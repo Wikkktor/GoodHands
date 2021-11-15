@@ -252,17 +252,36 @@ document.addEventListener("DOMContentLoaded", function() {
   if (form !== null) {
     new FormSteps(form);
   }
+  function is_int(value){
+        return (parseInt(value) % 1 === 0);
+}
+
   const form_checkboxes = document.querySelectorAll("#form_1_step input")
 
   // function FirstStepForm() {
-    const FirstStepFormDict = {}
+    let FirstStepFormArray = []
     document.querySelector("#form_1_step button").addEventListener("click", function () {
+      FirstStepFormArray = []
       form_checkboxes.forEach(function (checkbox) {
-        for (var i in checkbox) {
-          FirstStepFormDict[checkbox.value] = checkbox.checked
+          if (checkbox.checked === true){
+          FirstStepFormArray.push(parseInt(checkbox.value))
         }
       })
+      console.log(FirstStepFormArray)
     })
-  // }
-
+  document.querySelector("#form_1_step button").addEventListener("click", function () {
+    const Institutions = document.querySelectorAll("#form_3_step")
+    Institutions.forEach(function (institution) {
+      let category = institution.querySelectorAll("#category")
+      let arr = []
+      for (let i in category) {
+        if (is_int(category[i].innerText)) {
+          arr.push(parseInt(category[i].innerText))
+        }
+      }
+      if (!(FirstStepFormArray.every(elem => arr.includes(elem)))) {
+        institution.style.display = "none"
+      }
+    })
+  })
 });

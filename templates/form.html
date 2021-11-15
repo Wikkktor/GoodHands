@@ -132,7 +132,7 @@
                     {% for institution in institutions %}
                     <div id='form_3_step' class="form-group form-group--checkbox">
                     {% for cat in institution.categories.all %}
-                        <div style="visibility: hidden;">{{ cat.id }}</div>
+                        <div id="category" style="visibility: hidden;">{{ cat.id }}</div>
                         {% endfor %}
                         <label>
                             <input type="radio" name="organization" value="{{ institution.id }}"/>
