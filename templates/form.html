@@ -89,7 +89,7 @@
                     <h3>Zaznacz co chcesz oddać:</h3>
                     {% for element in category %}
                         <div class="form-group form-group--checkbox">
-                            <label>
+                            <label id="checkbox_form">
                                 <input
                                         type="checkbox"
                                         name="categories"
@@ -115,7 +115,7 @@
                     <div class="form-group form-group--inline">
                         <label>
                             Liczba 60l worków:
-                            <input type="number" name="bags" step="1" min="1"/>
+                            <input id="bag_amount" type="number" name="bags" step="1" min="1"/>
                         </label>
                     </div>
 
@@ -130,22 +130,22 @@
                 <div data-step="3">
                     <h3>Wybierz organizacje, której chcesz pomóc:</h3>
                     {% for institution in institutions %}
-                    <div id='form_3_step' class="form-group form-group--checkbox">
-                    {% for cat in institution.categories.all %}
-                        <div id="category" style="visibility: hidden;">{{ cat.id }}</div>
-                        {% endfor %}
-                        <label>
-                            <input type="radio" name="organization" value="{{ institution.id }}"/>
-                            <span class="checkbox radio"></span>
-                            <span class="description">
+                        <div id='form_3_step'  id="institutions" class="form-group form-group--checkbox">
+                            {% for cat in institution.categories.all %}
+                                <div id="category" style="display: none;">{{ cat.id }}</div>
+                            {% endfor %}
+                            <label>
+                                <input type="radio" name="organization" value="{{ institution.id }}"/>
+                                <span class="checkbox radio"></span>
+                                <span class="description">
 
-                  <div class="title">{{ institution.get_type_display }} {{institution.name}}</div>
+                  <div class="title">{{ institution.get_type_display }} {{ institution.name }}</div>
                   <div class="subtitle">
                     {{ institution.description }}
                   </div>
                 </span>
-                        </label>
-                    </div>
+                            </label>
+                        </div>
                     {% endfor %}
 
                     <div class="form-group form-group--buttons">
@@ -159,7 +159,7 @@
                     <h3>Podaj adres oraz termin odbioru rzecz przez kuriera:</h3>
 
                     <div class="form-section form-section--columns">
-                        <div class="form-section--column">
+                        <div id="address_form" class="form-section--column">
                             <h4>Adres odbioru</h4>
                             <div class="form-group form-group--inline">
                                 <label> Ulica <input type="text" name="address"/> </label>
@@ -182,7 +182,7 @@
                             </div>
                         </div>
 
-                        <div class="form-section--column">
+                        <div id="delivery_time" class="form-section--column">
                             <h4>Termin odbioru</h4>
                             <div class="form-group form-group--inline">
                                 <label> Data <input type="date" name="data"/> </label>
@@ -202,12 +202,12 @@
                     </div>
                     <div class="form-group form-group--buttons">
                         <button type="button" class="btn prev-step">Wstecz</button>
-                        <button type="button" class="btn next-step">Dalej</button>
+                        <button id="summary_button" type="button" class="btn next-step">Dalej</button>
                     </div>
                 </div>
 
                 <!-- STEP 6 -->
-                <div data-step="5">
+                <div id="form_summary" data-step="5">
                     <h3>Podsumowanie Twojej darowizny</h3>
 
                     <div class="summary">
@@ -233,7 +233,7 @@
                         <div class="form-section form-section--columns">
                             <div class="form-section--column">
                                 <h4>Adres odbioru:</h4>
-                                <ul>
+                                <ul id="delivery_address">
                                     <li>Prosta 51</li>
                                     <li>Warszawa</li>
                                     <li>99-098</li>
@@ -243,7 +243,7 @@
 
                             <div class="form-section--column">
                                 <h4>Termin odbioru:</h4>
-                                <ul>
+                                <ul id="delivery_time">
                                     <li>13/12/2018</li>
                                     <li>15:40</li>
                                     <li>Brak uwag</li>
