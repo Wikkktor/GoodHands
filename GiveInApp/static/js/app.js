@@ -252,4 +252,17 @@ document.addEventListener("DOMContentLoaded", function() {
   if (form !== null) {
     new FormSteps(form);
   }
+  const form_checkboxes = document.querySelectorAll("#form_1_step input")
+
+  // function FirstStepForm() {
+    const FirstStepFormDict = {}
+    document.querySelector("#form_1_step button").addEventListener("click", function () {
+      form_checkboxes.forEach(function (checkbox) {
+        for (var i in checkbox) {
+          FirstStepFormDict[checkbox.value] = checkbox.checked
+        }
+      })
+    })
+  // }
+
 });
