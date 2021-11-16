@@ -291,8 +291,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Summary of the form
     const summary_delivery_adress = document.querySelectorAll("#delivery_address li");
-    const summary_text = document.querySelectorAll("#form_summary .summary .summary--text");
     const summary_delivery_time = document.querySelectorAll("#delivery_time li");
+    const summary_text = document.querySelectorAll("#form_summary .summary .summary--text");
     const summary_button = document.querySelector("#summary_button ");
 
     const checkboxes = document.querySelectorAll("#checkbox_form");
@@ -300,8 +300,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const institutions = document.querySelectorAll("#form_3_step input")
     const delivery_adress = document.querySelectorAll("#address_form input");
     const delivery_time = document.querySelectorAll("#delivery_time input")
-
-    console.log(summary_delivery_time)
 
 
     summary_button.addEventListener("click", function () {
@@ -321,23 +319,23 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         summary_text[1].innerText = "Dla " + institution_name
 
-        let deli_time = []
-        delivery_time.forEach(function (time){
-            deli_time.push(time.value)
-            console.log(deli_time)
-        })
-        for (let i = 0; i < 4; i++){
-            summary_delivery_time[i].innerText =  deli_time[i]
-        }
-
-        let deli_address = []
+        let deli_adress = []
         delivery_adress.forEach(function (address) {
-            deli_address.push(address.value)
+            deli_adress.push(address.value)
         })
-        for (let i = 0; i < 5; i++){
-            summary_delivery_adress[i].innerText = deli_address[i]
+        for (let i = 0; i < 4; i++) {
+            summary_delivery_adress[i].innerText = deli_adress[i]
         }
 
+        let deli_time = []
+        delivery_time.forEach(function (time) {
+            deli_time.push(time.value)
+        })
+        const textarea = document.getElementById("mytextarea").value
+        for (let i = 0; i < 2; i++) {
+            summary_delivery_time[i].innerText = deli_time[i]
+        }
+        summary_delivery_time[2].innerText = textarea
     })
 
 
