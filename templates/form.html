@@ -81,9 +81,8 @@
         <div class="form--steps-container">
             <div class="form--steps-counter">Krok <span>1</span>/5</div>
 
-            <form id="Donation_form" action="form-confirmation.html" method="post">
-
-
+            <form method="post">
+                    {% csrf_token %}
                 <!-- STEP 1: class .active is switching steps -->
                 <div id="form_1_step" data-step="1" class="active">
                     <h3>Zaznacz co chcesz oddać:</h3>
@@ -254,7 +253,7 @@
 
                     <div class="form-group form-group--buttons">
                         <button type="button" class="btn prev-step">Wstecz</button>
-                        <button type="submit" class="btn">Potwierdzam</button>
+                        <button type="submit" class="btn">Potwierdź</button>
                     </div>
                 </div>
             </form>
