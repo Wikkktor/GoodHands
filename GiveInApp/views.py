@@ -88,6 +88,7 @@ class DonationConfirmation(View):
         return render(request, 'form-confirmation.html')
 
 
-class ProfileView(View):
+class ProfileView(LoginRequiredMixin, View):
     def get(self, request):
-        return render(request, 'profile.html')
+        donation = {'donation': Donation.objects.all().sorted('pick_up_date')}
+        return render(request, 'profile.html', donation)
