@@ -72,18 +72,14 @@ class AddDonationView(LoginRequiredMixin, View):
         return context
 
     def post(self, request):
-        donation = Donation()
-        # donation.categories.add(request.POST.get('categories'))
-        donation.quantity = request.POST['bags']
-        donation.institution_id = request.POST['organization']
-        donation.address = request.POST['address']
-        donation.city = request.POST['city']
-        donation.zip_code = request.POST['postcode']
-        donation.phone_number = request.POST['phone']
-        donation.pick_up_date = request.POST['data']
-        donation.pick_up_time = request.POST['time']
-        donation.pick_up_comment = request.POST['more_info']
-        donation.save()
+        d = Donation.objects.create(quantity=request.POST['bags'], institution_id=request.POST['organization'],
+                                    address=request.POST['address'], city=request.POST['city'],
+                                    zip_code=request.POST['postcode'], phone_number=request.POST['phone'],
+                                    pick_up_time=request.POST['time'], pick_up_date=request.POST['data'],
+                                    pick_up_comment=request.POST['more_info'])
+        ids = request.POST.getlist('categories')
+        c = Category.objects.filter(id__in=ids)
+        d.categories.set(c)
         return redirect('thank_you')
 
 
