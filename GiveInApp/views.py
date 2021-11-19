@@ -86,3 +86,8 @@ class AddDonationView(LoginRequiredMixin, View):
 class DonationConfirmation(View):
     def get(self, request):
         return render(request, 'form-confirmation.html')
+
+
+class ProfileView(View):
+    def get(self, request):
+        return render(request, 'profile.html')
