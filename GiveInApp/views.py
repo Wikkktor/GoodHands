@@ -5,14 +5,17 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.views import View
 from django.db.models import Sum
-from django.views.generic import ListView, CreateView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.decorators import user_passes_test, permission_required
-
-from GiveInApp.forms import UserForm
+from django.utils.decorators import method_decorator
 from GiveInApp.models import Institution, Donation, Category
 
 
 class MainPageView(View):
+    """
+    Main page View
+
+    """
     def get(self, request):
         institutions_amount = len(Institution.objects.all())
         foundation = Institution.objects.filter(type=1)
@@ -26,6 +29,9 @@ class MainPageView(View):
 
 
 class LoginView(View):
+    """
+    User login view
+    """
     def get(self, request):
         context = render(request, 'login.html')
         return context
@@ -42,6 +48,9 @@ class LoginView(View):
 
 
 class RegisterView(View):
+    """
+    User registration view
+    """
     def get(self, request):
         context = render(request, 'register.html')
         return context
@@ -63,12 +72,18 @@ class RegisterView(View):
 
 
 class LogoutView(View):
+    """
+    User logout View
+    """
     def get(self, request):
         logout(request)
         return redirect('main_page')
 
 
 class AddDonationView(LoginRequiredMixin, View):
+    """
+    Adding donation view
+    """
     def get(self, request):
         categories = Category.objects.all()
         institutions = Institution.objects.all()
@@ -88,11 +103,17 @@ class AddDonationView(LoginRequiredMixin, View):
 
 
 class DonationConfirmation(View):
+    """
+    Success donation, thank you page
+    """
     def get(self, request):
         return render(request, 'form-confirmation.html')
 
 
 class ProfileView(LoginRequiredMixin, View):
+    """
+    User profile view
+    """
     def get(self, request):
         donation = {'donation': Donation.objects.all().sorted('pick_up_date')}
         return render(request, 'profile.html', donation)
@@ -100,12 +121,22 @@ class ProfileView(LoginRequiredMixin, View):
 
 @user_passes_test(lambda u: u.is_superuser)
 def super_user_list_view(request):
+    """
+    List of users for superuser
+    :param request:
+    :return: list of users
+    """
     users = User.objects.all()
     return render(request, 'user_list.html', {'users': users})
 
 
 @permission_required('is_superuser')
 def add_user_view(request):
+    """
+    Adding new user as superuser
+    :param request:
+    :return: new user
+    """
     if request.method == 'GET':
         return render(request, 'create_user.html')
     if request.method == 'POST':
@@ -122,4 +153,24 @@ def add_user_view(request):
             user.save()
             return redirect('users_list')
 
+
+@method_decorator(permission_required('is_superuser'), name='dispatch')
+class Modify_user(UpdateView):
+    """
+    Updating user
+    """
+    model = User
+    template_name = 'update.html'
+    fields = ('username', 'email', 'first_name', 'last_name', 'password', 'is_superuser')
+    success_url = '/'
+
+
+@method_decorator(permission_required('is_superuser'), name='dispatch')
+class Delete_user(DeleteView):
+    """
+    deleting user
+    """
+    model = User
+    template_name = 'update.html'
+    success_url = '/'
 

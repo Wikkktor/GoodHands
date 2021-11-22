@@ -4,4 +4,4 @@ from django.forms import ModelForm
 
 class UserForm(ModelForm):
     model = User
-    fields = '__all__'
+    fields = ('username', 'email', 'first_name', 'last_name', 'password')
