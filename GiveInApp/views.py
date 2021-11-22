@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.views import View
 from django.db.models import Sum
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import UpdateView, DeleteView
 from django.contrib.auth.decorators import user_passes_test, permission_required
 from django.utils.decorators import method_decorator
 from GiveInApp.models import Institution, Donation, Category
