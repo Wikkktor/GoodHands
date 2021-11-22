@@ -1,11 +1,14 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.messages.context_processors import messages
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.views import View
 from django.db.models import Sum
+from django.views.generic import ListView, CreateView
+from django.contrib.auth.decorators import user_passes_test, permission_required
+
+from GiveInApp.forms import UserForm
 from GiveInApp.models import Institution, Donation, Category
 
 
@@ -50,7 +53,8 @@ class RegisterView(View):
         password = request.POST['password']
         password2 = request.POST['password2']
         if password == password2:
-            user = User.objects.create(first_name=name, last_name=surname, email=email, username=email, password=password)
+            user = User.objects.create(first_name=name, last_name=surname, email=email, username=email,
+                                       password=password)
             user.set_password(password)
             user.save()
             return redirect('main_page')
@@ -92,3 +96,18 @@ class ProfileView(LoginRequiredMixin, View):
     def get(self, request):
         donation = {'donation': Donation.objects.all().sorted('pick_up_date')}
         return render(request, 'profile.html', donation)
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def super_user_list_view(request):
+    users = User.objects.all()
+    return render(request, 'user_list.html', {'users': users})
+
+
+# class SuperUserCreate(View):
+#     @permission_required('is_superuser')
+#     def dispatch(self, request, *args, **kwargs):
+#         return super(SuperUserCreate, self).dispatch(request, *args, **kwargs)
+#
+#     def get(self, request):
+#         return render(request, 'create_user.html')
