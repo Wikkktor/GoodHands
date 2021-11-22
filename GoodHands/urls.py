@@ -28,5 +28,5 @@ urlpatterns = [
     path('thank-you/', v.DonationConfirmation.as_view(), name='thank_you'),
     path('profile/', v.ProfileView.as_view(), name='profile'),
     path('profiles/list', v.super_user_list_view, name='users_list'),
-    path('profiles/create', v.SuperUserCreate.as_view(), name='users_create')
+    path('profiles/create', v.add_user_view, name='users_create')
 ]

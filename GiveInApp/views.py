@@ -104,10 +104,22 @@ def super_user_list_view(request):
     return render(request, 'user_list.html', {'users': users})
 
 
-# class SuperUserCreate(View):
-#     @permission_required('is_superuser')
-#     def dispatch(self, request, *args, **kwargs):
-#         return super(SuperUserCreate, self).dispatch(request, *args, **kwargs)
-#
-#     def get(self, request):
-#         return render(request, 'create_user.html')
+@permission_required('is_superuser')
+def add_user_view(request):
+    if request.method == 'GET':
+        return render(request, 'create_user.html')
+    if request.method == 'POST':
+        if request.POST['password'] == request.POST['password2']:
+            user = User()
+            user.email = request.POST['email']
+            user.first_name = request.POST['firstname']
+            user.last_name = request.POST['lastname']
+            password = request.POST['password']
+            user.username = request.POST['email']
+            if bool(int(request.POST['superuser'])):
+                user.is_superuser = True
+            user.set_password(password)
+            user.save()
+            return redirect('users_list')
+
+
